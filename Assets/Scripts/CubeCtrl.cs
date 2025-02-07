@@ -6,8 +6,6 @@ public class CubeCtrl : MonoBehaviour
     private bool _active = false;
     private InputSystem_Actions inputSystemActions;
 
-    [SerializeField] private ParticleSystem sparkParticle;
-
     private void Start()
     {
         inputSystemActions = new InputSystem_Actions();
@@ -19,7 +17,6 @@ public class CubeCtrl : MonoBehaviour
         
         _active = true;
         inputSystemActions.Player.Enable();
-        sparkParticle.Play();
     }
     
     // Update is called once per frame
@@ -37,7 +34,7 @@ public class CubeCtrl : MonoBehaviour
         }
         else
         {
-            this.transform.RotateAround(Vector3.zero, Vector3.up, 10f * Time.deltaTime);
+            this.transform.Rotate(Vector3.up, 10f * Time.deltaTime);
         }
     }
 }

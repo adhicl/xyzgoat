@@ -1,8 +1,8 @@
 Tested on iPhone 16 pro emulator
 
-Xyzgoat is the main unity project
+Xyzgoat is the main unity project (Unity 6, 6000.0.36f)
 
-NativeIOSCode is the framework iOS project
+NativeIOSCode is the framework iOS project (XCode 16.2)
 
 Framework Build.zip is the product debug build from NativeIOSCode
 - the main Unity project use the framework from Debug simulator folder

@@ -2,6 +2,7 @@ using System;
 using DefaultNamespace;
 using TMPro;
 using UnityEngine;
+using System.Runtime.InteropServices;
 
 public class UICtrl : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class UICtrl : MonoBehaviour
     [SerializeField] TextMeshProUGUI tDateTime;
 
     private Common.UIType _currentUIType;
+
+    [DllImport("__Internal")] private  static extern void NativeIOSCode_openNativePage();
+
     
     private void Start()
     {
@@ -37,13 +41,17 @@ public class UICtrl : MonoBehaviour
     {
         if (_currentUIType == Common.UIType.Game) return;
 
-        Vector3 cPos = tDateTime.rectTransform.position;
+        DateTime cTime = DateTime.Now;
+
+        Vector3 cPos = tDateTime.rectTransform.anchoredPosition;
         cPos.x -= Time.deltaTime * 50f;
-        if (cPos.x <= -450f)
+        if (cPos.x <= -440f)
         {
-            cPos.x = 450f;
+            cPos.x = 440f;
         }
-        tDateTime.rectTransform.position = cPos;
+
+        tDateTime.text = "Current Date: "+cTime.ToString("dddd, dd MMMM yyyy")+",\nCurrent Time: "+cTime.ToString("HH:mm");
+        tDateTime.rectTransform.anchoredPosition = cPos;
     }
 
     private void ChangeUI()
@@ -77,6 +85,8 @@ public class UICtrl : MonoBehaviour
 
     public void OpenNativePage()
     {
-        
+        #if UNITY_IOS && !UNITY_EDITOR
+        NativeIOSCode_openNativePage();
+        #endif
     }
 }

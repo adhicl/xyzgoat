@@ -1,10 +1,15 @@
 using System;
 using UnityEngine;
+using System.Runtime.InteropServices;
 
 public class CubeCtrl : MonoBehaviour
 {
     private bool _active = false;
     private InputSystem_Actions inputSystemActions;
+
+    [DllImport("__Internal")] private  static extern void NativeIOSCode_objectRotated(float x, float y, float z);
+
+    [DllImport("__Internal")] private  static extern void NativeIOSCode_setupEmitter();
 
     private void Start()
     {
@@ -17,6 +22,10 @@ public class CubeCtrl : MonoBehaviour
         
         _active = true;
         inputSystemActions.Player.Enable();
+
+        #if UNITY_IOS && !UNITY_EDITOR
+        NativeIOSCode_setupEmitter();
+        #endif
     }
     
     // Update is called once per frame
@@ -31,6 +40,10 @@ public class CubeCtrl : MonoBehaviour
             cEuler.y -= input.x * Time.deltaTime * 50f;
             cEuler.z += input.y * Time.deltaTime * 50f;
             this.transform.eulerAngles = cEuler;
+
+            #if UNITY_IOS && !UNITY_EDITOR
+            NativeIOSCode_objectRotated(cEuler.x, cEuler.y, cEuler.z);
+            #endif
         }
         else
         {

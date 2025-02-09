@@ -1,0 +1,6 @@
+framework module NativeIOSCode {
+  umbrella header "NativeIOSCode.h"
+  export *
+
+  module * { export * }
+}
